@@ -15,15 +15,18 @@ export default function VanDetail() {
     return (
         <div className="van-detail-container p-[27px]">
             {van ? (
-                <div className="van-detail flex flex-col text-[#161616]">
-                    <img className="rounded-[5px] mt-[10px] mb-2.5 w-full max-h-full" src={van.imageUrl} />
-                    <i className={`van-type ${van.type} selected`}>{van.type}</i>
-                    <h2 className="text-3xl my-[10px]">{van.name}</h2>
-                    <p className="van-price"><span>${van.price}</span>/day</p>
-                    <p>{van.description}</p>
+                <div className="van-detail grid sm:grid-cols-2 text-[#161616] gap-3 items-center">
+                    <img className="rounded-[5px] min-h-full max-h-full" src={van.imageUrl} />
                     <div>
-                        <button className="btn-custom">Rent this van</button>
+                        <i className={`van-type ${van.type} selected`}>{van.type}</i>
+                        <h2 className="text-3xl my-[10px]">{van.name}</h2>
+                        <p className="van-price"><span>${van.price}</span>/day</p>
+                        <p>{van.description}</p>
+                        <div>
+                            <button className="btn-custom">Rent this van</button>
+                        </div>
                     </div>
+                    
                     
                 </div>
             ) : <h2>Loading...</h2>}

@@ -1,13 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="h-[110px] flex items-center py-2">
-        <Link to="/" className="text-black mr-auto uppercase font-black text-2xl">#VANLIFE</Link>
+    <header className="h-[110px] flex items-center justify-center py-2 max-sm:flex-col">
+        <Link to="/" className="text-black sm:mr-auto uppercase font-black text-2xl ">#VANLIFE</Link>
         <nav>
-            <Link to="/host">Host</Link>
-            <Link to="/about">About</Link>
-            <Link to="/vans">Vans</Link>
+            <NavLink 
+              to="/host"
+              className={({isActive}) => isActive ? "active-link" : null}
+              >Host</NavLink>
+            <NavLink
+              to="/about"
+              className={({isActive}) => isActive ? "active-link" : null}
+              >About</NavLink>
+            <NavLink 
+              to="/vans"
+              className={({isActive}) => isActive ? "active-link" : null}
+              >Vans</NavLink>
         </nav>
     </header>
   )
