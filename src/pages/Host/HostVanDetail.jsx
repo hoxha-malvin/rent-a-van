@@ -1,7 +1,47 @@
-const HostVanDetail = () => {
-  return (
-    <h1>Host Van Detail Page</h1>
-  )
-}
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 
-export default HostVanDetail
+export default function HostVanDetail() {
+    const { id } = useParams();
+    const [currentVan, setCurrentVan] = useState(null);
+
+    useEffect(() => {
+        fetch(`/api/host/vans/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.vans && Array.isArray(data.vans)) {
+                    const foundVan = data.vans.find(van => van.id === id);
+                    setCurrentVan(foundVan || null);
+                } else {
+                    console.error("Unexpected API response format:", data);
+                    setCurrentVan(null);
+                }
+            })
+            .catch(err => console.error("Error fetching van details:", err));
+    }, [id]);
+
+    if (!currentVan) {
+        return <h1>Loading...</h1>;
+    }
+
+    return (
+        <section>
+            <Link to=".." relative="path" className="back-button">
+                &larr; <span>Back to all vans</span>
+            </Link>
+
+            <div className="host-van-detail-layout-container">
+                <div className="host-van-detail">
+                    <img src={currentVan.imageUrl} alt={currentVan.name} />
+                    <div className="host-van-detail-info-text">
+                        <i className={`van-type van-type-${currentVan.type}`}>
+                            {currentVan.type}
+                        </i>
+                        <h3>{currentVan.name}</h3>
+                        <h4>${currentVan.price}/day</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
