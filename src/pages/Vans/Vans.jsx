@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function Vans() {
-    const [vans, setVans] = useState([])
+    
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [vans, setVans] = useState([]);
+    const typeFilter = searchParams.get("type");
     useEffect(() => {
         fetch("/api/vans")
             .then(res => res.json())
-            .then(data => setVans(data.vans))
-    }, [])
+            .then(data => setVans(data.vans));
+    }, []);
 
-    const vanElements = vans.map(van => (
+    const displayedVans = typeFilter ? vans.filter(van => van.type === typeFilter) : vans;
+
+    const vanElements = displayedVans.map(van => (
         <div key={van.id} className="van-tile px-[23px]">
             <Link to={`/vans/${van.id}`} aria-label={`View details for ${van.name}, priced at $${van.price} per day`}>
                 <img src={van.imageUrl} className="max-w-full rounded-[5px]"/>
