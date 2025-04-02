@@ -2,6 +2,11 @@ import React from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { getVans } from "../../api"
 
+export function loader() {
+    return "Vans data goes here"
+}
+
+
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [vans, setVans] = React.useState([])
@@ -33,14 +38,17 @@ export default function Vans() {
         : vans;
     
     const vanElements = displayedVans.map(van => (
-        <div key={van.id} className="van-tile">
-            <Link to={van.id} state={{search: `?${searchParams.toString()}`, type: typeFilter}}>
-                <img src={van.imageUrl} />
+        <div key={van.id}  >
+            <Link to={van.id} state={{search: `?${searchParams.toString()}`, type: typeFilter}} className="flex flex-col justify-stretch items-stretch h-full">
+                <img src={van.imageUrl} className="w-full h-full object-cover"/>
                 <div className="van-info">
                     <h3>{van.name}</h3>
                     <p>${van.price}<span>/day</span></p>
                 </div>
-                <i className={`van-type ${van.type} selected`}>{van.type}</i>
+                <div>
+                    <i className={`van-type ${van.type} selected`}>{van.type}</i>
+                </div>
+                
             </Link>
         </div>
     ))
@@ -98,7 +106,7 @@ export default function Vans() {
                 ) : null}
 
             </div>
-            <div className="van-list">
+            <div className="grid grid-cols-2 gap-2">
                 {vanElements}
             </div>
         </div>
