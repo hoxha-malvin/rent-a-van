@@ -1,37 +1,19 @@
 import React from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useSearchParams, useLoaderData } from "react-router-dom"
 import { getVans } from "../../api"
 
 export function loader() {
-    return "Vans data goes here"
+    return getVans()
 }
 
 
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [vans, setVans] = React.useState([])
-    const [loading, setLoading] = React.useState(false)
+    
     const [error, setError] = React.useState(null);
+    const vans = useLoaderData()  
 
     const typeFilter = searchParams.get("type")
-    React.useEffect(() => {
-        async function loadVans() {
-            async function loadVans() {
-                setLoading(true)
-                try {
-                    const data = await getVans()
-                    setVans(data)
-                } catch (err) {
-                    setError(err)
-                } finally {
-                    setLoading(false)
-                }
-            }
-            
-            loadVans()
-        }
-        loadVans()
-    }, [])
 
     const displayedVans = typeFilter
         ? vans.filter(van => van.type === typeFilter)
@@ -39,8 +21,8 @@ export default function Vans() {
     
     const vanElements = displayedVans.map(van => (
         <div key={van.id}  >
-            <Link to={van.id} state={{search: `?${searchParams.toString()}`, type: typeFilter}} className="flex flex-col justify-stretch items-stretch h-full">
-                <img src={van.imageUrl} className="w-full h-full object-cover"/>
+            <Link to={van.id} state={{search: `?${searchParams.toString()}`, type: typeFilter}} className="flex  flex-col h-full">
+                <img src={van.imageUrl} className="w-full flex-1 object-cover"/>
                 <div className="van-info">
                     <h3>{van.name}</h3>
                     <p>${van.price}<span>/day</span></p>
@@ -62,10 +44,6 @@ export default function Vans() {
             }
             return prevParams
         })
-    }
-
-    if (loading) {
-        return <h1 aria-live="polite">Loading...</h1>
     }
     
     if (error) {
