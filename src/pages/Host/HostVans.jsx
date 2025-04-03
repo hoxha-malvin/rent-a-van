@@ -1,19 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getHostVans } from "../../api"
+import { requireAuth } from "../../utils"
 
-export function loader() {
+export async function loader() {
+    await requireAuth()
     return getHostVans()
 }
 
 const HostVans = () => {
-    const [vans, setVans] = useState([]);
-
-    useEffect(() => {
-        fetch("/api/host/vans")
-            .then(res => res.json())
-            .then(data => setVans(data.vans));
-    });
+    const vans = useLoaderData();
 
     const hostVansEls = vans.map((van) => (
         <Link

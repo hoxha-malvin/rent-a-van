@@ -1,30 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, Outlet, NavLink } from "react-router-dom";
+import { useParams, Link, Outlet, NavLink,useLoaderData } from "react-router-dom";
+import { requireAuth } from "../../utils"
+
+export async function loader({ params }) {
+    await requireAuth()
+    return getHostVans(params.id)
+}
 
 export default function HostVanDetail() {
-    const { id } = useParams();
-    const [currentVan, setCurrentVan] = useState(null);
+    const currentVan = useLoaderData()
 
     const activeStyles = {
         fontWeight: "bold",
         textDecoration: "underline",
         color: "#161616"
     }
-
-    useEffect(() => {
-        fetch(`/api/host/vans/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.vans && Array.isArray(data.vans)) {
-                    const foundVan = data.vans.find(van => van.id === id);
-                    setCurrentVan(foundVan || null);
-                } else {
-                    console.error("Unexpected API response format:", data);
-                    setCurrentVan(null);
-                }
-            })
-            .catch(err => console.error("Error fetching van details:", err));
-    }, [id]);
 
     if (!currentVan) {
         return <h1>Loading...</h1>;
