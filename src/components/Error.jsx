@@ -1,7 +1,12 @@
-const Error = () => {
-  return (
-    <div>An error Occured</div>
-  )
-}
+import { useRouteError } from "react-router-dom"
 
-export default Error
+export default function Error() {
+    const error = useRouteError()
+    
+    return (
+        <>
+        <h1>Error: {error.message}</h1>
+        <pre>{error.status} - {error.statusText}</pre>
+        </>
+    )
+}
