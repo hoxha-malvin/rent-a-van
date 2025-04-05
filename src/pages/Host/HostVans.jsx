@@ -10,7 +10,7 @@ export async function loader() {
 
 const HostVans = () => {
     const vans = useLoaderData();
-
+    console.log(vans)
     const hostVansEls = vans.map((van) => (
         <Link
             to={van.id}

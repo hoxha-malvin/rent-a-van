@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, Outlet, NavLink,useLoaderData } from "react-router-dom";
 import { requireAuth } from "../../utils"
-
+import { getHostVans } from "../../api"
 export async function loader({ params }) {
     await requireAuth()
     return getHostVans(params.id)
@@ -9,7 +9,7 @@ export async function loader({ params }) {
 
 export default function HostVanDetail() {
     const currentVan = useLoaderData()
-
+    console.log(currentVan)
     const activeStyles = {
         fontWeight: "bold",
         textDecoration: "underline",
