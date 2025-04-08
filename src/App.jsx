@@ -16,7 +16,7 @@ import HostVanPricing from "./pages/Host/HostVanPricing"
 import HostVanPhotos from "./pages/Host/HostVanPhotos"
 import NotFound from "./pages/Vans/NotFound";
 import Error from "./components/Error"
-import Login, {loader as loginLoader, action as loginAction} from "./pages/Vans/Login";
+import Login, {loader as loginLoader, action as loginAction} from "./Login";
 import {
   RouterProvider,
   createBrowserRouter,

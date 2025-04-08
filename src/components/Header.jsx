@@ -2,6 +2,10 @@ import { Link, NavLink } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
 
 const Header = () => {
+  function fakeLogOut() {
+    localStorage.removeItem("loggedin")
+  }
+
   return (
     <header className="h-[110px] flex items-center justify-center py-2 max-sm:flex-col">
         <Link to="/" className="text-black sm:mr-auto uppercase font-black text-2xl ">#VANLIFE</Link>
@@ -27,6 +31,7 @@ const Header = () => {
             <Link to="login">
               <CiLogin size={25}/>
             </Link>
+            <button onClick={fakeLogOut} className="border p-5 cursor-pointer">X</button>
         </nav>
     </header>
   )
