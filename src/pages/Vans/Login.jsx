@@ -1,7 +1,13 @@
 import { useState } from "react"
+import { useLoaderData } from "react-router-dom";
+
+export function loader({ request }) {
+    return new URL(request.url).searchParams.get("message")
+}
 
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState({emai: '', password: ''});
+    const message = useLoaderData();
 
     function handleChange(e) {
         const {name, value} = e.target;
@@ -18,7 +24,8 @@ const Login = () => {
 
     return (
         <div className="login-container">
-            <h1 className="text-4xl">Sign in to your account</h1>
+            <h1 className="text-4xl ">Sign in to your account</h1>
+            {message && <h2 className="text-red-600">{message}</h2>}
             <form onSubmit={handleSubmit} className="login-form">
                 <input
                     name="email"
