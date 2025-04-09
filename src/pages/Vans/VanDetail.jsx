@@ -7,7 +7,6 @@ export function loader({params}){
 }
 
 export default function VanDetail() {
-    const params = useParams();
 
     const location = useLocation()
     const van = useLoaderData()
